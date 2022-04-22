@@ -8,7 +8,7 @@ class RecipeServices {
     try {
       http.Response response = await http.get(
         Uri.parse(
-            "https://api.edamam.com/search?app_id=045beb36&app_key=8367ae8d26be6a790b175a45df519012&q=n"),
+            "https://api.edamam.com/search?app_id=045beb36&app_key=8367ae8d26be6a790b175a45df519012&q=rice"),
       );
       final data = jsonDecode(response.body)["hits"];
       print(data);

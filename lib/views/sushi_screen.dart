@@ -11,7 +11,8 @@ import 'package:sliver_tools/sliver_tools.dart';
 class SushiScreen extends StatelessWidget {
   final String heroTag;
   final RecipeModel recipe;
-  const SushiScreen({Key? key, required this.heroTag, required this.recipe}) : super(key: key);
+  const SushiScreen({Key? key, required this.heroTag, required this.recipe})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,11 +23,16 @@ class SushiScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: CustomScrollView(
               slivers: [
-                const RecipeAppBar(),
+                RecipeAppBar(
+                  recipeName: recipe.label,
+                ),
                 SliverToBoxAdapter(
                   child: Padding(
                       padding: const EdgeInsets.only(bottom: 35.0),
-                      child: PreviewIngridientCard(heroTag: heroTag,)),
+                      child: PreviewIngridientCard(
+                        heroTag: heroTag,
+                        imageUrl: recipe.image,
+                      )),
                 ),
                 SliverPinnedHeader(
                   child: Container(
@@ -34,23 +40,25 @@ class SushiScreen extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 25.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
+                      children: [
                         Text(
-                          "Ingredients (12)",
-                          style: TextStyle(
+                          "Ingredients (${recipe.ingredients.length})",
+                          style: const TextStyle(
                               color: Color(0xFF161B4D),
                               fontSize: 28,
                               fontWeight: FontWeight.bold),
                         ),
-                        TextIconButton()
+                        const TextIconButton()
                       ],
                     ),
                   ),
                 ),
                 SliverList(
                   delegate: SliverChildBuilderDelegate(
-                      ((context, index) => Ingridients(ingredient: recipe.ingredients[index],)),
-                      childCount: 10),
+                      ((context, index) => Ingridients(
+                            ingredient: recipe.ingredients[index],
+                          )),
+                      childCount: recipe.ingredients.length),
                 )
               ],
             ),
